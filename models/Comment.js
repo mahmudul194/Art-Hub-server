@@ -1,0 +1,9 @@
+const mongoose = require('mongoose');
+
+const commentSchema = new mongoose.Schema({
+  artworkId: { type: mongoose.Schema.Types.ObjectId, ref: 'Artwork', required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  comment: { type: String, required: true },
+}, { timestamps: true });
+
+module.exports = mongoose.model('Comment', commentSchema);
