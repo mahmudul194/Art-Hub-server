@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
     const token = generateToken(user);
     res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
     
-    res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    res.status(201).json({ token, user });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }
@@ -66,7 +66,7 @@ router.post('/login', async (req, res) => {
     const token = generateToken(user);
     res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    res.json({ token, user });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }
@@ -101,7 +101,7 @@ router.post('/google', async (req, res) => {
     const token = generateToken(user);
     res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    res.json({ token, user });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }
