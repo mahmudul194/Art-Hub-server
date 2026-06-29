@@ -83,8 +83,10 @@ router.post('/google', async (req, res) => {
   try {
     const { name, email, googleId, avatar } = req.body;
     let user = await User.findOne({ email });
+    let isNewUser = false;
 
     if (!user) {
+      isNewUser = true;
       user = new User({
         name,
         email,
@@ -101,7 +103,7 @@ router.post('/google', async (req, res) => {
     const token = generateToken(user);
     res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
-    res.json({ token, user });
+    res.json({ token, user, isNewUser });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }

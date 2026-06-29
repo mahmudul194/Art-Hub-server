@@ -18,11 +18,14 @@ router.get('/profile', authMiddleware, async (req, res) => {
 // @desc Update user profile
 router.put('/profile', authMiddleware, async (req, res) => {
   try {
-    const { name, avatar } = req.body;
+    const { name, avatar, role } = req.body;
     
     const user = await User.findById(req.user.id);
     if (name) user.name = name;
     if (avatar) user.avatar = avatar;
+    if (role && (role === 'user' || role === 'artist')) {
+      user.role = role;
+    }
     
     await user.save();
     res.json(user);
